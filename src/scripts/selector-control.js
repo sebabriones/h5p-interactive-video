@@ -25,7 +25,7 @@ const ButtonType = {
 * @param {string} contentId
 */
 const SelectorControl = function (name, options, selectedOption, menuItemType, l10n, contentId) {
-  /** @alias H5P.InteractiveVideo.SelectorControl# */
+  /** @alias H5P.InteractiveVideoCFRD.SelectorControl# */
   const self = this;
   const id = `interactive-video-${contentId}-menu-${name}`;
   const controls = new Controls([new Keyboard()]);

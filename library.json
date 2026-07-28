@@ -1,13 +1,13 @@
 {
-  "title": "Interactive Video",
+  "title": "Interactive Video (CFRD)",
   "description": "Put texts, tasks and other medias on top of your video.",
   "license": "MIT",
   "contentType": "Media",
   "majorVersion": 1,
-  "minorVersion": 27,
-  "patchVersion": 9,
-  "machineName": "H5P.InteractiveVideo",
-  "author": "Joubel",
+  "minorVersion": 0,
+  "patchVersion": 0,
+  "machineName": "H5P.InteractiveVideoCFRD",
+  "author": "CFRD-UDEC",
   "embedTypes": [
     "iframe"
   ],
@@ -19,12 +19,12 @@
   },
   "preloadedJs": [
     {
-      "path": "dist/h5p-interactive-video.js"
+      "path": "dist/h5p-interactive-video-cfrd.js"
     }
   ],
   "preloadedCss": [
     {
-      "path": "dist/h5p-interactive-video.css"
+      "path": "dist/h5p-interactive-video-cfrd.css"
     }
   ],
   "preloadedDependencies": [
@@ -51,9 +51,9 @@
   ],
   "editorDependencies": [
     {
-      "machineName": "H5P.InteractiveVideo",
+      "machineName": "H5P.InteractiveVideoCFRD",
       "majorVersion": 1,
-      "minorVersion": 27
+      "minorVersion": 0
     },
     {
       "machineName": "H5PEditor.Wizard",
@@ -61,9 +61,9 @@
       "minorVersion": 2
     },
     {
-      "machineName": "H5PEditor.InteractiveVideo",
+      "machineName": "H5PEditor.InteractiveVideoCFRD",
       "majorVersion": 1,
-      "minorVersion": 25
+      "minorVersion": 0
     }
   ]
 }

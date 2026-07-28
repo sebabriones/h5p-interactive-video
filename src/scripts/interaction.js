@@ -102,10 +102,10 @@ const isScrollableLibrary = function (library) {
 /**
  * Keeps control of interactions in the interactive video.
  *
- * @class H5P.InteractiveVideoInteraction
+ * @class H5P.InteractiveVideoCFRDInteraction
  * @extends H5P.EventDispatcher
  * @param {Parameters} parameters describes action behavior
- * @param {H5P.InteractiveVideo} player instance
+ * @param {H5P.InteractiveVideoCFRD} player instance
  * @param {Object} previousState
  */
 function Interaction(parameters, player, previousState) {
@@ -211,7 +211,7 @@ function Interaction(parameters, player, previousState) {
     // if requires completion -> open dialog right away
     if (self.getRequiresCompletion() &&
         player.editor === undefined &&
-        player.currentState !== H5P.InteractiveVideo.SEEKING) {
+        player.currentState !== H5P.InteractiveVideoCFRD.SEEKING) {
       openDialog(true);
     }
 
@@ -882,7 +882,7 @@ function Interaction(parameters, player, previousState) {
     self.trigger('display', $interaction);
 
     if (self.getRequiresCompletion() &&
-        player.currentState !== H5P.InteractiveVideo.SEEKING &&
+        player.currentState !== H5P.InteractiveVideoCFRD.SEEKING &&
         player.editor === undefined &&
         !self.hasFullScore()) {
       showOverlayMask($interaction);
@@ -1041,7 +1041,7 @@ function Interaction(parameters, player, previousState) {
    * Interactions that needs answer are interactions that are visible,
    * requires completion and does not have full score.
    *
-   * @return {Array.<H5P.InteractiveVideoInteraction>}
+   * @return {Array.<H5P.InteractiveVideoCFRDInteraction>}
    *    Interactions that needs answer
    */
   var getInteractionsThatNeedsAnswer = function () {
@@ -1657,7 +1657,7 @@ function Interaction(parameters, player, previousState) {
       if (instance !== undefined) {
         const interactionCopyrights = new H5P.ContentCopyrights();
         interactionCopyrights.addContent(H5P.getCopyrights(instance, parameters, player.contentId));
-        interactionCopyrights.setLabel(title + ' ' + H5P.InteractiveVideo.humanizeTime(parameters.duration.from) + ' - ' + H5P.InteractiveVideo.humanizeTime(parameters.duration.to));
+        interactionCopyrights.setLabel(title + ' ' + H5P.InteractiveVideoCFRD.humanizeTime(parameters.duration.from) + ' - ' + H5P.InteractiveVideoCFRD.humanizeTime(parameters.duration.to));
 
         return interactionCopyrights;
       }
@@ -1725,7 +1725,7 @@ function Interaction(parameters, player, previousState) {
    * @returns {object}
    */
   self.getClipboardData = function () {
-    return H5P.DragNBar.clipboardify(H5PEditor.InteractiveVideo.clipboardKey, parameters, 'action');
+    return H5P.DragNBar.clipboardify(H5PEditor.InteractiveVideoCFRD.clipboardKey, parameters, 'action');
   };
 
   /**

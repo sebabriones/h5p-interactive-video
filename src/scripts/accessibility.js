@@ -55,7 +55,7 @@ export default class Accessibility {
 
   /**
    * Determine the correct announcement from a list of interactions
-   * @param {H5P.InteractiveVideoInteraction[]} interactions
+   * @param {H5P.InteractiveVideoCFRDInteraction[]} interactions
    */
   announceInteractions(interactions) {
     if (interactions.length > 0) {
@@ -89,7 +89,7 @@ export default class Accessibility {
    * Returns the title of the content, if only single content appears
    *
    * @param {number} newInteractionCount
-   * @param {H5P.InteractiveVideoInteraction} interaction
+   * @param {H5P.InteractiveVideoCFRDInteraction} interaction
    * @return {string}
    */
   getTitleAnnouncement(newInteractionCount, interaction) {

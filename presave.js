@@ -9,7 +9,7 @@ var H5PEditor = H5PEditor || {};
  * @param finished
  * @constructor
  */
-H5PPresave['H5P.InteractiveVideo'] = function (content, finished) {
+H5PPresave['H5P.InteractiveVideoCFRD'] = function (content, finished) {
   var presave = H5PEditor.Presave;
 
   if (isContentInvalid()) {

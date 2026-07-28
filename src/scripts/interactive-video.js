@@ -29,7 +29,7 @@ const KEYBOARD_STEP_LENGTH_SECONDS = 5;
 /**
  * Initialize a new interactive video.
  *
- * @class H5P.InteractiveVideo
+ * @class H5P.InteractiveVideoCFRD
  * @extends H5P.EventDispatcher
  * @property {Object|undefined} editor Set when editing
  * @param {InteractiveVideoParameters} params
@@ -1064,7 +1064,7 @@ InteractiveVideo.prototype.loaded = function () {
  * Initialize interaction at the given index.
  *
  * @param {number} index
- * @returns {H5P.InteractiveVideoInteraction}
+ * @returns {H5P.InteractiveVideoCFRDInteraction}
  */
 InteractiveVideo.prototype.initInteraction = function (index) {
   var self = this;
@@ -3469,7 +3469,7 @@ InteractiveVideo.prototype.toggleFocusTrap = function () {
 /**
  * Trap the focus within a list of interactions
  *
- * @param {H5P.InteractiveVideoInteraction[]} requiredInteractions
+ * @param {H5P.InteractiveVideoCFRDInteraction[]} requiredInteractions
  * @param {jQuery} $focusedElement
  */
 InteractiveVideo.prototype.trapFocusInInteractions = function (requiredInteractions, $focusedElement) {
@@ -3592,7 +3592,7 @@ InteractiveVideo.prototype.hasUncompletedRequiredInteractions = function (second
 /**
  * Returns an array of interactions currently visible
  *
- * @return {H5P.InteractiveVideoInteraction[]} visible interactions
+ * @return {H5P.InteractiveVideoCFRDInteraction[]} visible interactions
  */
 InteractiveVideo.prototype.getVisibleInteractions = function () {
   return this.interactions.filter(function (interaction) {
@@ -3603,7 +3603,7 @@ InteractiveVideo.prototype.getVisibleInteractions = function () {
 /**
  * Returns an array of interactions currently visible
  *
- * @return {H5P.InteractiveVideoInteraction[]} visible interactions
+ * @return {H5P.InteractiveVideoCFRDInteraction[]} visible interactions
  */
 InteractiveVideo.prototype.getVisibleInteractionsAt = function (second) {
   return this.interactions.filter(function (interaction) {

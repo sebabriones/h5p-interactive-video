@@ -6,4 +6,4 @@ import InteractiveVideo from "../scripts/interactive-video";
 
 // Load library
 H5P = H5P || {};
-H5P.InteractiveVideo = InteractiveVideo;
+H5P.InteractiveVideoCFRD = InteractiveVideo;

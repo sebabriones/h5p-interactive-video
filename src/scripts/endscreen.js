@@ -199,7 +199,7 @@ class Endscreen extends H5P.EventDispatcher {
 
     $('<div/>', {
       'class': `${ENDSCREEN_STYLE_BASE}-overview-table-row-time`,
-      html: H5P.InteractiveVideo.humanizeTime(time),
+      html: H5P.InteractiveVideoCFRD.humanizeTime(time),
       appendTo: $row,
       'aria-hidden': true
     });
