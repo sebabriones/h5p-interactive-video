@@ -15,7 +15,10 @@ Fork CFRD de **H5P.InteractiveVideo** (upstream 1.27.9, `coreApi` 1.27, Lumi).
 cd dev/interactive-video-cfrd/h5p-interactive-video-cfrd-1.0
 npm install
 npm run build
+npm run sync:lumi
 ```
+
+Publica `H5P.InteractiveVideoCFRD-1.0` y `H5PEditor.InteractiveVideoCFRD-1.0` en `nuevas-librerias-h5p/` y, si existe, en `%APPDATA%\lumi\libraries\`.
 
 Referencias upstream y intentos previos: `../example/`.
 
