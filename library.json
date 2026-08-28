@@ -5,9 +5,9 @@
   "contentType": "Media",
   "majorVersion": 1,
   "minorVersion": 0,
-  "patchVersion": 1,
+  "patchVersion": 2,
   "machineName": "H5P.InteractiveVideoCFRD",
-  "author": "CFRD-UDEC",
+  "author": "sbriones (CFRD-UDEC)",
   "embedTypes": [
     "iframe"
   ],
