@@ -90,7 +90,110 @@
                   {
                     "label": "ভিডিও বিরতি"
                   },
+                                    {
+                    "label": "Wait before pausing",
+                    "description": "Seconds after the interaction appears before the video pauses. 0 pauses immediately. The wait cannot extend past the end of the display time."
+                  },
                   {
+                    "label": "Marker animation",
+                    "description": "How the button or poster enters. Current keeps the existing button motion and shows posters immediately.",
+                    "options": [
+                      {
+                        "label": "Current"
+                      },
+                      {
+                        "label": "None"
+                      },
+                      {
+                        "label": "Fade"
+                      },
+                      {
+                        "label": "Scale"
+                      },
+                      {
+                        "label": "From bottom"
+                      },
+                      {
+                        "label": "From top"
+                      },
+                      {
+                        "label": "From left"
+                      },
+                      {
+                        "label": "From right"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Exit animation",
+                    "description": "How the button or poster leaves when its time ends. None removes it immediately.",
+                    "options": [
+                      {
+                        "label": "None"
+                      },
+                      {
+                        "label": "Fade"
+                      },
+                      {
+                        "label": "Scale"
+                      },
+                      {
+                        "label": "From bottom"
+                      },
+                      {
+                        "label": "From top"
+                      },
+                      {
+                        "label": "From left"
+                      },
+                      {
+                        "label": "From right"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Window animation",
+                    "description": "How the activity window enters when a button is opened.",
+                    "options": [
+                      {
+                        "label": "Current"
+                      },
+                      {
+                        "label": "None"
+                      },
+                      {
+                        "label": "Fade"
+                      },
+                      {
+                        "label": "Scale"
+                      },
+                      {
+                        "label": "From bottom"
+                      },
+                      {
+                        "label": "From top"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Animation duration",
+                    "description": "Length of the entrance and exit animations in milliseconds. 0 disables motion. 200 matches the original player."
+                  },
+                  {
+                    "label": "Animation easing",
+                    "options": [
+                      {
+                        "label": "Ease out"
+                      },
+                      {
+                        "label": "Ease"
+                      },
+                      {
+                        "label": "Linear"
+                      }
+                    ]
+                  },
+{
                     "label": "এভাবে দেখাও",
                     "description": "<b>বাটন</b>, এমনিতে দেখা যাবে না, এটা খুলতে ব্যবহারকারীকে ক্লিক করতে হবে। <b>পোস্টার</b> এমনিতে এর কনটেন্ট দেখানো হয়, ক্লিক করার দরকার হয় না।",
                     "options": [

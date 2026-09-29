@@ -90,7 +90,110 @@
                   {
                     "label": "비디오 일시 멈춤"
                   },
+                                    {
+                    "label": "Wait before pausing",
+                    "description": "Seconds after the interaction appears before the video pauses. 0 pauses immediately. The wait cannot extend past the end of the display time."
+                  },
                   {
+                    "label": "Marker animation",
+                    "description": "How the button or poster enters. Current keeps the existing button motion and shows posters immediately.",
+                    "options": [
+                      {
+                        "label": "Current"
+                      },
+                      {
+                        "label": "None"
+                      },
+                      {
+                        "label": "Fade"
+                      },
+                      {
+                        "label": "Scale"
+                      },
+                      {
+                        "label": "From bottom"
+                      },
+                      {
+                        "label": "From top"
+                      },
+                      {
+                        "label": "From left"
+                      },
+                      {
+                        "label": "From right"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Exit animation",
+                    "description": "How the button or poster leaves when its time ends. None removes it immediately.",
+                    "options": [
+                      {
+                        "label": "None"
+                      },
+                      {
+                        "label": "Fade"
+                      },
+                      {
+                        "label": "Scale"
+                      },
+                      {
+                        "label": "From bottom"
+                      },
+                      {
+                        "label": "From top"
+                      },
+                      {
+                        "label": "From left"
+                      },
+                      {
+                        "label": "From right"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Window animation",
+                    "description": "How the activity window enters when a button is opened.",
+                    "options": [
+                      {
+                        "label": "Current"
+                      },
+                      {
+                        "label": "None"
+                      },
+                      {
+                        "label": "Fade"
+                      },
+                      {
+                        "label": "Scale"
+                      },
+                      {
+                        "label": "From bottom"
+                      },
+                      {
+                        "label": "From top"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Animation duration",
+                    "description": "Length of the entrance and exit animations in milliseconds. 0 disables motion. 200 matches the original player."
+                  },
+                  {
+                    "label": "Animation easing",
+                    "options": [
+                      {
+                        "label": "Ease out"
+                      },
+                      {
+                        "label": "Ease"
+                      },
+                      {
+                        "label": "Linear"
+                      }
+                    ]
+                  },
+{
                     "label": "표시 방법",
                     "description": "<b>Button</b> (버튼식) 사용자가 누르면 열리는 있는 접힌 상호 작용이다. <b>Poster</b> (포스터식)은 비디오 바로 위에 표시되는 확장된 상호작용.",
                     "options": [

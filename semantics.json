@@ -186,6 +186,93 @@
                   "type": "boolean"
                 },
                 {
+                  "name": "pauseDelay",
+                  "label": "Wait before pausing",
+                  "importance": "low",
+                  "description": "Seconds after the interaction appears before the video pauses. 0 pauses immediately. The wait cannot extend past the end of the display time.",
+                  "type": "number",
+                  "min": 0,
+                  "max": 600,
+                  "decimals": 1,
+                  "default": 0,
+                  "optional": true
+                },
+                {
+                  "name": "markerAnimation",
+                  "label": "Marker animation",
+                  "importance": "low",
+                  "description": "How the button or poster enters. Current keeps the existing button motion and shows posters immediately.",
+                  "type": "select",
+                  "default": "current",
+                  "options": [
+                    { "value": "current", "label": "Current" },
+                    { "value": "none", "label": "None" },
+                    { "value": "fade", "label": "Fade" },
+                    { "value": "scale", "label": "Scale" },
+                    { "value": "from-bottom", "label": "From bottom" },
+                    { "value": "from-top", "label": "From top" },
+                    { "value": "from-left", "label": "From left" },
+                    { "value": "from-right", "label": "From right" }
+                  ]
+                },
+                {
+                  "name": "exitAnimation",
+                  "label": "Exit animation",
+                  "importance": "low",
+                  "description": "How the button or poster leaves when its time ends. None removes it immediately.",
+                  "type": "select",
+                  "default": "none",
+                  "options": [
+                    { "value": "none", "label": "None" },
+                    { "value": "fade", "label": "Fade" },
+                    { "value": "scale", "label": "Scale" },
+                    { "value": "from-bottom", "label": "From bottom" },
+                    { "value": "from-top", "label": "From top" },
+                    { "value": "from-left", "label": "From left" },
+                    { "value": "from-right", "label": "From right" }
+                  ]
+                },
+                {
+                  "name": "dialogAnimation",
+                  "label": "Window animation",
+                  "importance": "low",
+                  "description": "How the activity window enters when a button is opened.",
+                  "type": "select",
+                  "default": "current",
+                  "options": [
+                    { "value": "current", "label": "Current" },
+                    { "value": "none", "label": "None" },
+                    { "value": "fade", "label": "Fade" },
+                    { "value": "scale", "label": "Scale" },
+                    { "value": "from-bottom", "label": "From bottom" },
+                    { "value": "from-top", "label": "From top" }
+                  ]
+                },
+                {
+                  "name": "animationDuration",
+                  "label": "Animation duration",
+                  "importance": "low",
+                  "description": "Length of the entrance and exit animations in milliseconds. 0 disables motion. 200 matches the original player.",
+                  "type": "number",
+                  "min": 0,
+                  "max": 1000,
+                  "step": 50,
+                  "default": 200,
+                  "optional": true
+                },
+                {
+                  "name": "animationEasing",
+                  "label": "Animation easing",
+                  "importance": "low",
+                  "type": "select",
+                  "default": "ease-out",
+                  "options": [
+                    { "value": "ease-out", "label": "Ease out" },
+                    { "value": "ease", "label": "Ease" },
+                    { "value": "linear", "label": "Linear" }
+                  ]
+                },
+                {
                   "name": "displayType",
                   "label": "Display as",
                   "importance": "low",

@@ -1946,3 +1946,278 @@
   cursor: pointer;
   pointer-events: none;
 }
+
+/* Entrance motion for markers and activity windows. Current keeps the original motion. */
+.h5p-interactive-video .h5p-interaction[class*="h5p-anim-marker-"] > .h5p-interaction-button,
+.h5p-interactive-video .h5p-interaction[class*="h5p-anim-marker-"] > .h5p-interaction-label,
+.h5p-interactive-video .h5p-interaction.h5p-poster[class*="h5p-anim-marker-"],
+.h5p-interactive-video .h5p-interaction-label-standalone[class*="h5p-anim-marker-"] {
+  transition-duration: var(--h5p-iv-anim-duration, 200ms);
+  transition-timing-function: var(--h5p-iv-anim-easing, ease-out);
+}
+
+.h5p-interactive-video .h5p-anim-marker-none > .h5p-interaction-button,
+.h5p-interactive-video .h5p-anim-marker-none > .h5p-interaction-label,
+.h5p-interactive-video .h5p-anim-marker-none.h5p-poster,
+.h5p-interactive-video .h5p-anim-marker-none.h5p-interaction-label-standalone {
+  transition: none;
+}
+
+.h5p-interactive-video .h5p-anim-marker-none.h5p-hidden > .h5p-interaction-button,
+.h5p-interactive-video .h5p-anim-marker-none.h5p-hidden > .h5p-interaction-label {
+  transform: none;
+}
+
+.h5p-interactive-video .h5p-anim-marker-fade > .h5p-interaction-button,
+.h5p-interactive-video .h5p-anim-marker-fade > .h5p-interaction-label,
+.h5p-interactive-video .h5p-anim-marker-fade.h5p-poster,
+.h5p-interactive-video .h5p-anim-marker-fade.h5p-interaction-label-standalone,
+.h5p-interactive-video .h5p-anim-marker-scale > .h5p-interaction-button,
+.h5p-interactive-video .h5p-anim-marker-scale > .h5p-interaction-label,
+.h5p-interactive-video .h5p-anim-marker-scale.h5p-poster,
+.h5p-interactive-video .h5p-anim-marker-scale.h5p-interaction-label-standalone,
+.h5p-interactive-video .h5p-anim-marker-from-bottom > .h5p-interaction-button,
+.h5p-interactive-video .h5p-anim-marker-from-bottom > .h5p-interaction-label,
+.h5p-interactive-video .h5p-anim-marker-from-bottom.h5p-poster,
+.h5p-interactive-video .h5p-anim-marker-from-top > .h5p-interaction-button,
+.h5p-interactive-video .h5p-anim-marker-from-top > .h5p-interaction-label,
+.h5p-interactive-video .h5p-anim-marker-from-top.h5p-poster,
+.h5p-interactive-video .h5p-anim-marker-from-left > .h5p-interaction-button,
+.h5p-interactive-video .h5p-anim-marker-from-left > .h5p-interaction-label,
+.h5p-interactive-video .h5p-anim-marker-from-left.h5p-poster,
+.h5p-interactive-video .h5p-anim-marker-from-right > .h5p-interaction-button,
+.h5p-interactive-video .h5p-anim-marker-from-right > .h5p-interaction-label,
+.h5p-interactive-video .h5p-anim-marker-from-right.h5p-poster {
+  transition: transform var(--h5p-iv-anim-duration, 200ms) var(--h5p-iv-anim-easing, ease-out),
+    opacity var(--h5p-iv-anim-duration, 200ms) var(--h5p-iv-anim-easing, ease-out);
+}
+
+.h5p-interactive-video .h5p-anim-marker-fade.h5p-hidden > .h5p-interaction-button,
+.h5p-interactive-video .h5p-anim-marker-fade.h5p-hidden > .h5p-interaction-label,
+.h5p-interactive-video .h5p-anim-marker-fade.h5p-hidden.h5p-poster,
+.h5p-interactive-video .h5p-anim-marker-fade.h5p-hidden.h5p-interaction-label-standalone {
+  transform: none;
+  opacity: 0;
+}
+
+.h5p-interactive-video .h5p-anim-marker-scale.h5p-hidden > .h5p-interaction-button,
+.h5p-interactive-video .h5p-anim-marker-scale.h5p-hidden > .h5p-interaction-label,
+.h5p-interactive-video .h5p-anim-marker-scale.h5p-hidden.h5p-poster,
+.h5p-interactive-video .h5p-anim-marker-scale.h5p-hidden.h5p-interaction-label-standalone {
+  transform: scale(0.6);
+  opacity: 0;
+}
+
+.h5p-interactive-video .h5p-anim-marker-from-bottom.h5p-hidden > .h5p-interaction-button,
+.h5p-interactive-video .h5p-anim-marker-from-bottom.h5p-hidden > .h5p-interaction-label,
+.h5p-interactive-video .h5p-anim-marker-from-bottom.h5p-hidden.h5p-poster {
+  transform: translateY(1.25em);
+  opacity: 0;
+}
+
+.h5p-interactive-video .h5p-anim-marker-from-top.h5p-hidden > .h5p-interaction-button,
+.h5p-interactive-video .h5p-anim-marker-from-top.h5p-hidden > .h5p-interaction-label,
+.h5p-interactive-video .h5p-anim-marker-from-top.h5p-hidden.h5p-poster {
+  transform: translateY(-1.25em);
+  opacity: 0;
+}
+
+.h5p-interactive-video .h5p-anim-marker-from-left.h5p-hidden > .h5p-interaction-button,
+.h5p-interactive-video .h5p-anim-marker-from-left.h5p-hidden > .h5p-interaction-label,
+.h5p-interactive-video .h5p-anim-marker-from-left.h5p-hidden.h5p-poster {
+  transform: translateX(-1.25em);
+  opacity: 0;
+}
+
+.h5p-interactive-video .h5p-anim-marker-from-right.h5p-hidden > .h5p-interaction-button,
+.h5p-interactive-video .h5p-anim-marker-from-right.h5p-hidden > .h5p-interaction-label,
+.h5p-interactive-video .h5p-anim-marker-from-right.h5p-hidden.h5p-poster {
+  transform: translateX(1.25em);
+  opacity: 0;
+}
+
+/* Poster panels need a larger travel than the 1.25em used by buttons. */
+.h5p-interactive-video .h5p-interaction.h5p-poster[class*="h5p-anim-marker-"]:not(.h5p-anim-marker-current):not(.h5p-anim-marker-none) {
+  transition-property: transform, opacity;
+  transition-duration: var(--h5p-iv-anim-duration, 200ms);
+  transition-timing-function: var(--h5p-iv-anim-easing, ease-out);
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-poster.h5p-anim-marker-fade.h5p-hidden {
+  transform: none;
+  opacity: 0;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-poster.h5p-anim-marker-scale.h5p-hidden {
+  transform: scale(0.82);
+  opacity: 0;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-poster.h5p-anim-marker-from-bottom.h5p-hidden {
+  transform: translateY(12%);
+  opacity: 0;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-poster.h5p-anim-marker-from-top.h5p-hidden {
+  transform: translateY(-12%);
+  opacity: 0;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-poster.h5p-anim-marker-from-left.h5p-hidden {
+  transform: translateX(-12%);
+  opacity: 0;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-poster.h5p-anim-marker-from-right.h5p-hidden {
+  transform: translateX(12%);
+  opacity: 0;
+}
+
+@keyframes h5p-iv-poster-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes h5p-iv-poster-scale {
+  from { opacity: 0; transform: scale(0.82); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes h5p-iv-poster-from-bottom {
+  from { opacity: 0; transform: translateY(12%); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes h5p-iv-poster-from-top {
+  from { opacity: 0; transform: translateY(-12%); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes h5p-iv-poster-from-left {
+  from { opacity: 0; transform: translateX(-12%); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes h5p-iv-poster-from-right {
+  from { opacity: 0; transform: translateX(12%); }
+  to { opacity: 1; transform: none; }
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-poster.h5p-anim-run {
+  animation-duration: var(--h5p-iv-anim-duration, 200ms);
+  animation-timing-function: var(--h5p-iv-anim-easing, ease-out);
+  animation-fill-mode: both;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-poster.h5p-anim-marker-fade.h5p-anim-run {
+  animation-name: h5p-iv-poster-fade;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-poster.h5p-anim-marker-scale.h5p-anim-run {
+  animation-name: h5p-iv-poster-scale;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-poster.h5p-anim-marker-from-bottom.h5p-anim-run {
+  animation-name: h5p-iv-poster-from-bottom;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-poster.h5p-anim-marker-from-top.h5p-anim-run {
+  animation-name: h5p-iv-poster-from-top;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-poster.h5p-anim-marker-from-left.h5p-anim-run {
+  animation-name: h5p-iv-poster-from-left;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-poster.h5p-anim-marker-from-right.h5p-anim-run {
+  animation-name: h5p-iv-poster-from-right;
+}
+
+@keyframes h5p-iv-exit-fade {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes h5p-iv-exit-scale {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: scale(0.82); }
+}
+
+@keyframes h5p-iv-exit-from-bottom {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateY(12%); }
+}
+
+@keyframes h5p-iv-exit-from-top {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateY(-12%); }
+}
+
+@keyframes h5p-iv-exit-from-left {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateX(-12%); }
+}
+
+@keyframes h5p-iv-exit-from-right {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateX(12%); }
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-anim-out {
+  pointer-events: none;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-anim-exit-fade.h5p-anim-out {
+  animation: h5p-iv-exit-fade var(--h5p-iv-anim-duration, 200ms) var(--h5p-iv-anim-easing, ease-out) forwards;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-anim-exit-scale.h5p-anim-out {
+  animation: h5p-iv-exit-scale var(--h5p-iv-anim-duration, 200ms) var(--h5p-iv-anim-easing, ease-out) forwards;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-anim-exit-from-bottom.h5p-anim-out {
+  animation: h5p-iv-exit-from-bottom var(--h5p-iv-anim-duration, 200ms) var(--h5p-iv-anim-easing, ease-out) forwards;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-anim-exit-from-top.h5p-anim-out {
+  animation: h5p-iv-exit-from-top var(--h5p-iv-anim-duration, 200ms) var(--h5p-iv-anim-easing, ease-out) forwards;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-anim-exit-from-left.h5p-anim-out {
+  animation: h5p-iv-exit-from-left var(--h5p-iv-anim-duration, 200ms) var(--h5p-iv-anim-easing, ease-out) forwards;
+}
+
+.h5p-interactive-video .h5p-interaction.h5p-anim-exit-from-right.h5p-anim-out {
+  animation: h5p-iv-exit-from-right var(--h5p-iv-anim-duration, 200ms) var(--h5p-iv-anim-easing, ease-out) forwards;
+}
+
+.h5p-interactive-video .h5p-dialog[class*="h5p-anim-dialog-"] {
+  transition: transform var(--h5p-iv-anim-duration, 200ms) var(--h5p-iv-anim-easing, ease-out),
+    opacity var(--h5p-iv-anim-duration, 200ms) var(--h5p-iv-anim-easing, ease-out);
+}
+
+.h5p-interactive-video .h5p-dialog.h5p-anim-dialog-none,
+.h5p-interactive-video .h5p-dialog-wrapper.h5p-hidden .h5p-dialog.h5p-anim-dialog-none {
+  transition: none;
+  transform: none;
+  opacity: 1;
+}
+
+.h5p-interactive-video .h5p-dialog-wrapper.h5p-hidden .h5p-dialog.h5p-anim-dialog-fade {
+  transform: none;
+  opacity: 0;
+}
+
+.h5p-interactive-video .h5p-dialog-wrapper.h5p-hidden .h5p-dialog.h5p-anim-dialog-scale {
+  transform: scale(0.92);
+  opacity: 0;
+}
+
+.h5p-interactive-video .h5p-dialog-wrapper.h5p-hidden .h5p-dialog.h5p-anim-dialog-from-top {
+  transform: translateY(-100%);
+}
+
+.h5p-interactive-video .h5p-dialog-wrapper.h5p-hidden .h5p-dialog.h5p-anim-dialog-from-bottom,
+.h5p-interactive-video .h5p-dialog-wrapper.h5p-hidden .h5p-dialog.h5p-anim-dialog-current {
+  transform: translateY(100%);
+}

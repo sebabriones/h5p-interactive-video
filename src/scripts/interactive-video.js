@@ -1100,10 +1100,11 @@ InteractiveVideo.prototype.initInteraction = function (index) {
     delayWork(isYouTube ? 100 : null, function () {
       var isPlaying = self.currentState === H5P.Video.PLAYING ||
         self.currentState === H5P.Video.BUFFERING;
-      if (isPlaying && interaction.pause()) {
+      if (isPlaying && interaction.pause() && interaction.getPauseDelay() <= 0) {
         if (!self.focusInteraction) {
           self.focusInteraction = interaction;
         }
+        interaction.consumePause();
         self.video.pause();
       }
     });
@@ -3171,6 +3172,62 @@ InteractiveVideo.prototype.toggleFullScreen = function () {
 };
 
 /**
+ * Pause playback when a visible interaction reaches its delayed pause time.
+ *
+ * @param {number} time
+ */
+InteractiveVideo.prototype.applyDelayedPauses = function (time) {
+  var playing;
+  var index;
+  var interaction;
+  var isYouTube;
+  var self = this;
+
+  if (!this.interactions || !this.video) {
+    return;
+  }
+
+  playing = this.currentState === H5P.Video.PLAYING ||
+    this.currentState === H5P.Video.BUFFERING;
+  if (!playing) {
+    return;
+  }
+
+  for (index = 0; index < this.interactions.length; index++) {
+    interaction = this.interactions[index];
+    if (!interaction.getElement || !interaction.getElement()) {
+      continue;
+    }
+    if (!interaction.pause || !interaction.pause() || interaction.getPauseDelay() <= 0) {
+      continue;
+    }
+
+    interaction.resetPauseGate(time);
+    if (interaction.hasConsumedPause() || time + 0.04 < interaction.getPauseAt()) {
+      continue;
+    }
+
+    interaction.consumePause();
+    if (!self.focusInteraction) {
+      self.focusInteraction = interaction;
+    }
+
+    isYouTube = (self.video.pressToPlay !== undefined);
+    if (isYouTube) {
+      window.setTimeout(function () {
+        if (self.video) {
+          self.video.pause();
+        }
+      }, 100);
+    }
+    else {
+      self.video.pause();
+    }
+    return;
+  }
+};
+
+/**
  * Called when the time of the video changes.
  * Makes sure to update all UI elements.
  *
@@ -3192,6 +3249,7 @@ InteractiveVideo.prototype.timeUpdate = function (time, skipNextTimeUpdate) {
   }
 
   self.updateInteractions(time);
+  self.applyDelayedPauses(time);
 
   // Skip queueing next time update
   if (skipNextTimeUpdate) {

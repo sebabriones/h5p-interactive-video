@@ -111,6 +111,180 @@ const isScrollableLibrary = function (library) {
 function Interaction(parameters, player, previousState) {
   var self = this;
 
+  var MARKER_ANIMS = {
+    current: true,
+    none: true,
+    fade: true,
+    scale: true,
+    'from-bottom': true,
+    'from-top': true,
+    'from-left': true,
+    'from-right': true
+  };
+  var EXIT_ANIMS = {
+    none: true,
+    fade: true,
+    scale: true,
+    'from-bottom': true,
+    'from-top': true,
+    'from-left': true,
+    'from-right': true
+  };
+  var DIALOG_ANIMS = {
+    current: true,
+    none: true,
+    fade: true,
+    scale: true,
+    'from-bottom': true,
+    'from-top': true
+  };
+  var EASING_MAP = {
+    'ease-out': 'ease-out',
+    ease: 'ease',
+    linear: 'linear'
+  };
+  var pauseConsumed = false;
+  var exitTimer = null;
+  var dismissed = false;
+
+  self.getMarkerAnimation = function () {
+    return MARKER_ANIMS[parameters.markerAnimation] ? parameters.markerAnimation : 'current';
+  };
+
+  self.getExitAnimation = function () {
+    return EXIT_ANIMS[parameters.exitAnimation] ? parameters.exitAnimation : 'none';
+  };
+
+  self.getDialogAnimation = function () {
+    return DIALOG_ANIMS[parameters.dialogAnimation] ? parameters.dialogAnimation : 'current';
+  };
+
+  self.getAnimationDuration = function () {
+    var duration = Number(parameters.animationDuration);
+    if (!isFinite(duration)) {
+      duration = 200;
+    }
+    return Math.max(0, Math.min(1000, duration));
+  };
+
+  self.getAnimationEasing = function () {
+    return EASING_MAP[parameters.animationEasing] || 'ease-out';
+  };
+
+  self.prefersNoMarkerMotion = function () {
+    return self.getMarkerAnimation() === 'none' || self.getAnimationDuration() === 0;
+  };
+
+  /**
+   * Exit runs only when a close animation is chosen and the duration is above zero.
+   *
+   * @returns {boolean}
+   */
+  self.canAnimateExit = function () {
+    return self.getExitAnimation() !== 'none' && self.getAnimationDuration() > 0;
+  };
+
+  /**
+   * Seconds to wait after the interaction appears before pausing.
+   * Clamped so the pause still happens while the interaction is visible.
+   *
+   * @returns {number}
+   */
+  self.getPauseDelay = function () {
+    var delay = Number(parameters.pauseDelay);
+    var from;
+    var to;
+
+    if (!isFinite(delay) || delay < 0) {
+      delay = 0;
+    }
+
+    from = parameters.duration ? Number(parameters.duration.from) : 0;
+    to = parameters.duration ? Number(parameters.duration.to) : NaN;
+    if (!isFinite(from)) {
+      from = 0;
+    }
+    if (isFinite(to) && to >= from) {
+      delay = Math.min(delay, to - from);
+    }
+
+    return delay;
+  };
+
+  /**
+   * Video time at which this interaction should pause playback.
+   *
+   * @returns {number}
+   */
+  self.getPauseAt = function () {
+    var from = parameters.duration ? Number(parameters.duration.from) : 0;
+    if (!isFinite(from)) {
+      from = 0;
+    }
+    return from + self.getPauseDelay();
+  };
+
+  self.hasConsumedPause = function () {
+    return pauseConsumed;
+  };
+
+  self.consumePause = function () {
+    pauseConsumed = true;
+  };
+
+  /**
+   * Allow the delayed pause to run again if playback returns before its time.
+   *
+   * @param {number} time
+   */
+  self.resetPauseGate = function (time) {
+    if (time < self.getPauseAt() - 0.05) {
+      pauseConsumed = false;
+    }
+  };
+
+  self.applyMarkerAppearance = function ($el) {
+    var node;
+
+    if (!$el || !$el.length) {
+      return;
+    }
+
+    $el.addClass('h5p-anim-marker-' + self.getMarkerAnimation());
+    node = $el.get(0);
+    node.style.setProperty('--h5p-iv-anim-duration', self.getAnimationDuration() + 'ms');
+    node.style.setProperty('--h5p-iv-anim-easing', self.getAnimationEasing());
+  };
+
+  self.applyDialogAppearance = function ($dialogWrapper) {
+    var $dialog;
+    var chosen;
+    var node;
+    var names = ['current', 'none', 'fade', 'scale', 'from-bottom', 'from-top'];
+
+    if (!$dialogWrapper || !$dialogWrapper.length) {
+      return;
+    }
+
+    $dialog = $dialogWrapper.find('.h5p-dialog').first();
+    if (!$dialog.length) {
+      return;
+    }
+
+    names.forEach(function (name) {
+      $dialog.removeClass('h5p-anim-dialog-' + name);
+    });
+
+    chosen = self.getDialogAnimation();
+    if (chosen === 'none' || self.getAnimationDuration() === 0) {
+      chosen = 'none';
+    }
+    $dialog.addClass('h5p-anim-dialog-' + chosen);
+    node = $dialog.get(0);
+    node.style.setProperty('--h5p-iv-anim-duration', self.getAnimationDuration() + 'ms');
+    node.style.setProperty('--h5p-iv-anim-easing', self.getAnimationEasing());
+  };
+
   // Initialize event inheritance
   H5P.EventDispatcher.call(self);
 
@@ -177,7 +351,7 @@ function Interaction(parameters, player, previousState) {
    * @private
    */
   var createButton = function (preventAnimation) {
-    var hiddenClass = preventAnimation ? '' : ' h5p-hidden';
+    var hiddenClass = (preventAnimation || self.prefersNoMarkerMotion()) ? '' : ' h5p-hidden';
     $interaction = $('<div/>', {
       'tabindex': 0,
       'role': 'button',
@@ -259,6 +433,7 @@ function Interaction(parameters, player, previousState) {
       $label = createLabel(parameters.label, 'h5p-interaction').appendTo($interaction);
     }
 
+    self.applyMarkerAppearance($interaction);
     self.trigger('display', $interaction);
     setTimeout(function () {
       if ($interaction) {
@@ -288,13 +463,15 @@ function Interaction(parameters, player, previousState) {
    * @return {H5P.jQuery}
    */
   const createStandaloneLabel = () => {
-    $interaction = createLabel(parameters.label, 'h5p-interaction h5p-interaction-label-standalone');
+    var animateIn = !self.prefersNoMarkerMotion() && self.getMarkerAnimation() !== 'current';
+    $interaction = createLabel(parameters.label, 'h5p-interaction h5p-interaction-label-standalone' + (animateIn ? ' h5p-hidden' : ''));
     $interaction.css({
       left: `${parameters.x}%`,
       top: `${parameters.y}%`,
       width: '',
       height: 'initial'
     });
+    self.applyMarkerAppearance($interaction);
     self.trigger('display', $interaction);
     setTimeout(() => {
       if ($interaction) {
@@ -347,8 +524,18 @@ function Interaction(parameters, player, previousState) {
    *
    * @private
    */
-  var closeInteraction = function (seekTo) {
+  var closeInteraction = function (seekTo, onClosed) {
     var closeDialog = !player.hasUncompletedRequiredInteractions(seekTo);
+
+    var finishClose = function () {
+      self.trigger('remove', $interaction);
+      if (closeDialog) {
+        hideOverlayMask($interaction);
+      }
+      if (onClosed) {
+        onClosed();
+      }
+    };
 
     if (instance) {
       instance.trigger('hide');
@@ -362,22 +549,24 @@ function Interaction(parameters, player, previousState) {
       if (closeDialog) {
         player.dnb.dialog.close();
       }
-    }
-    else {
-      if (player.isMobileView && closeDialog) {
-        player.dnb.dialog.close();
-      }
-
-      if ($interaction) {
-        $interaction.detach();
-      }
+      finishClose();
+      return;
     }
 
-    self.trigger('remove', $interaction);
-
-    if (closeDialog) {
-      hideOverlayMask($interaction);
+    if (player.isMobileView && closeDialog) {
+      player.dnb.dialog.close();
     }
+
+    if ($interaction && self.canAnimateExit()) {
+      dismissed = true;
+      playExit(finishClose);
+      return;
+    }
+
+    if ($interaction) {
+      $interaction.detach();
+    }
+    finishClose();
   };
 
   /**
@@ -391,8 +580,9 @@ function Interaction(parameters, player, previousState) {
     button.innerHTML = player.l10n.continueWithVideo;
     button.className = 'h5p-interaction-continue-button';
     button.addEventListener('click', function () {
-      closeInteraction();
-      player.play();
+      closeInteraction(undefined, function () {
+        player.play();
+      });
     });
 
     return button;
@@ -419,15 +609,17 @@ function Interaction(parameters, player, previousState) {
       }
 
       instance.on('noSuccessScreen', function () {
-        closeInteraction();
-        player.play();
+        closeInteraction(undefined, function () {
+          player.play();
+        });
       });
     }
 
     if (library === 'H5P.FreeTextQuestion') {
       instance.on('continue', function () {
-        closeInteraction();
-        player.play();
+        closeInteraction(undefined, function () {
+          player.play();
+        });
       });
     }
   };
@@ -542,6 +734,7 @@ function Interaction(parameters, player, previousState) {
     }
 
     // Open dialog
+    self.applyDialogAppearance($dialogWrapper);
     player.dnb.dialog.open($dialogContent);
     player.disableTabIndexes();
     player.dnb.dialog.addLibraryClass(library);
@@ -813,6 +1006,8 @@ function Interaction(parameters, player, previousState) {
     var dimensions = getDimensions();
     var visuals = getVisuals();
 
+    var animatePoster = !self.prefersNoMarkerMotion() && self.getMarkerAnimation() !== 'current';
+
     $interaction = $('<div/>', {
       'aria-label': player.l10n.interaction,
       'tabindex': '-1',
@@ -879,6 +1074,10 @@ function Interaction(parameters, player, previousState) {
     addContinueButton($instanceParent);
 
     // Trigger event listeners
+    self.applyMarkerAppearance($interaction);
+    if (animatePoster) {
+      $interaction.addClass('h5p-anim-run');
+    }
     self.trigger('display', $interaction);
 
     if (self.getRequiresCompletion() &&
@@ -926,8 +1125,9 @@ function Interaction(parameters, player, previousState) {
         if (!instance.hasButton('iv-continue')) {
           // Register continue button
           instance.addButton('iv-continue', player.l10n.defaultAdaptivitySeekLabel, function () {
-            closeInteraction();
-            continueWithVideo();
+            closeInteraction(undefined, function () {
+              continueWithVideo();
+            });
           });
         }
 
@@ -958,16 +1158,15 @@ function Interaction(parameters, player, previousState) {
     // add and show adaptivity button, hide continue button
     instance.hideButton('iv-continue')
       .addButton('iv-adaptivity-' + adaptivityId, adaptivityLabel, function () {
-        closeInteraction(adaptivity.seekTo);
+        closeInteraction(adaptivity.seekTo, function () {
+          // Reset interaction
+          if (!fullScore && instance.resetTask) {
+            instance.resetTask();
+            instance.hideButton('iv-adaptivity-' + adaptivityId);
+          }
 
-        // Reset interaction
-        if (!fullScore && instance.resetTask) {
-          instance.resetTask();
-          instance.hideButton('iv-adaptivity-' + adaptivityId);
-        }
-
-        self.remove();
-        continueWithVideo(adaptivity.seekTo);
+          continueWithVideo(adaptivity.seekTo);
+        });
       })
       .showButton('iv-adaptivity-' + adaptivityId, 1)
       .hideButton('iv-adaptivity-' + (fullScore ? 'wrong' : 'correct'), 1)
@@ -1264,6 +1463,62 @@ function Interaction(parameters, player, previousState) {
     return !(time < parameters.duration.from || time >= parameters.duration.to + 1); // Make sure that all interactions display at least one second to be consistent with the old behaviour
   };
 
+  var clearExitTimer = function () {
+    if (exitTimer) {
+      clearTimeout(exitTimer);
+      exitTimer = null;
+    }
+  };
+
+  /**
+   * Play the close animation from the visible state, then detach the element.
+   */
+  var playExit = function (onDone) {
+    var node;
+    var duration;
+    var finished;
+
+    if (!$interaction || !$interaction.length || $interaction.hasClass('h5p-anim-out')) {
+      if (onDone) {
+        onDone();
+      }
+      return;
+    }
+
+    finished = false;
+    $interaction.removeClass('h5p-anim-run');
+    node = $interaction.get(0);
+    if (node) {
+      void node.offsetWidth;
+    }
+    $interaction.addClass('h5p-anim-out h5p-anim-exit-' + self.getExitAnimation());
+    duration = self.getAnimationDuration();
+
+    var finishExit = function () {
+      if (finished) {
+        return;
+      }
+      finished = true;
+      clearExitTimer();
+      if ($interaction) {
+        $interaction.off('animationend.ivexit');
+      }
+      self.remove();
+      if (onDone) {
+        onDone();
+      }
+    };
+
+    $interaction.on('animationend.ivexit', function (event) {
+      if (event.target !== node) {
+        return;
+      }
+      finishExit();
+    });
+    clearExitTimer();
+    exitTimer = setTimeout(finishExit, duration + 50);
+  };
+
   /**
    * Display or remove the interaction depending on the video time.
    *
@@ -1274,6 +1529,13 @@ function Interaction(parameters, player, previousState) {
   self.toggle = function (time, preventAnimation) {
     if (!self.visibleAt(time)) {
       isVisible = false;
+      pauseConsumed = false;
+
+      if ($interaction && $interaction.hasClass('h5p-anim-out')) {
+        return;
+      }
+
+      dismissed = false;
 
       if ($interaction) {
         // Remove interaction from display
@@ -1288,8 +1550,26 @@ function Interaction(parameters, player, previousState) {
           player.editor.hideInteractionTitle();
           isHovered = false;
         }
-        self.remove();
+        if (preventAnimation || !self.canAnimateExit()) {
+          clearExitTimer();
+          self.remove();
+        }
+        else if (!$interaction.hasClass('h5p-anim-out')) {
+          playExit();
+        }
       }
+      return;
+    }
+
+    if (dismissed) {
+      return;
+    }
+
+    if ($interaction && $interaction.hasClass('h5p-anim-out')) {
+      clearExitTimer();
+      $interaction.off('animationend.ivexit');
+      $interaction.removeClass('h5p-anim-out h5p-anim-exit-fade h5p-anim-exit-scale h5p-anim-exit-from-bottom h5p-anim-exit-from-top h5p-anim-exit-from-left h5p-anim-exit-from-right');
+      isVisible = true;
       return;
     }
 
@@ -1428,6 +1708,7 @@ function Interaction(parameters, player, previousState) {
    * Removes interaction from display.
    */
   self.remove = function () {
+    clearExitTimer();
     if ($interaction) {
       // Let others react to the hiding of this interaction
       self.trigger('domHidden', {

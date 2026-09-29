@@ -90,7 +90,110 @@
                   {
                     "label": "Pausar video"
                   },
+                                    {
+                    "label": "Espera antes de pausar",
+                    "description": "Segundos después de que aparece la interacción antes de pausar el vídeo. 0 pausa de inmediato. La espera no puede pasar del fin del tiempo de visualización."
+                  },
                   {
+                    "label": "Animación del botón o cartel",
+                    "description": "Cómo entra el botón o el cartel. Actual conserva el movimiento del botón y muestra los carteles al instante.",
+                    "options": [
+                      {
+                        "label": "Actual"
+                      },
+                      {
+                        "label": "Sin animación"
+                      },
+                      {
+                        "label": "Fundido"
+                      },
+                      {
+                        "label": "Escala"
+                      },
+                      {
+                        "label": "Desde abajo"
+                      },
+                      {
+                        "label": "Desde arriba"
+                      },
+                      {
+                        "label": "Desde la izquierda"
+                      },
+                      {
+                        "label": "Desde la derecha"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Animación de cierre",
+                    "description": "Cómo sale el botón o el cartel al terminar su tiempo. Sin animación lo quita de inmediato.",
+                    "options": [
+                      {
+                        "label": "Sin animación"
+                      },
+                      {
+                        "label": "Fundido"
+                      },
+                      {
+                        "label": "Escala"
+                      },
+                      {
+                        "label": "Desde abajo"
+                      },
+                      {
+                        "label": "Desde arriba"
+                      },
+                      {
+                        "label": "Desde la izquierda"
+                      },
+                      {
+                        "label": "Desde la derecha"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Animación de la ventana",
+                    "description": "Cómo entra la ventana de la actividad al abrir un botón.",
+                    "options": [
+                      {
+                        "label": "Actual"
+                      },
+                      {
+                        "label": "Sin animación"
+                      },
+                      {
+                        "label": "Fundido"
+                      },
+                      {
+                        "label": "Escala"
+                      },
+                      {
+                        "label": "Desde abajo"
+                      },
+                      {
+                        "label": "Desde arriba"
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Duración de la animación",
+                    "description": "Duración de las animaciones de entrada y de cierre en milisegundos. 0 desactiva el movimiento. 200 coincide con el reproductor original."
+                  },
+                  {
+                    "label": "Ritmo de la animación",
+                    "options": [
+                      {
+                        "label": "Suave al final"
+                      },
+                      {
+                        "label": "Suave"
+                      },
+                      {
+                        "label": "Lineal"
+                      }
+                    ]
+                  },
+{
                     "label": "Mostrar como",
                     "description": "<b>Botón</b> es una interacción colapsada que el usuario debe presionar para abrir. <b>Cartel</b> es una interacción expandida mostrada directamente sobre del video",
                     "options": [
